@@ -1,14 +1,12 @@
+using BookCatalog.Application;
 using BookCatalog.Application.Mappings;
 using BookCatalog.Persistence;
 using BookCatalog.Persistence.Data;
 using BookCatalog.WebApi;
-using BookCatalog.Application;
+using BookCatalog.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -27,10 +25,6 @@ builder.Services.AddControllers()
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-//builder.Services.AddPersistence(builder.Configuration);
-//builder.Services.AddApplicationServices();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -42,6 +36,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Middleware для обработки исключений (должен быть первым)
+app.UseCustomExceptionHandler();
 
 using (var scope = app.Services.CreateScope())
 {
