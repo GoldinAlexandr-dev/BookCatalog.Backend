@@ -79,6 +79,7 @@ namespace BookCatalog.WebApi.Controllers
         {
             if (id != updateBookDto.Id)
                 return BadRequest("ID mismatch");
+
             try
             {
                 await _bookService.UpdateBookAsync(updateBookDto);
