@@ -1,5 +1,5 @@
-﻿using BookCatalog.Application.DTOs;
-using BookCatalog.Application.ServiceInterfaces;
+﻿using BookCatalog.ApplicationServices.DTOs;
+using BookCatalog.ApplicationServices.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookCatalog.WebApi.Controllers

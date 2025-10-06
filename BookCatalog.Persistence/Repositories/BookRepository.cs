@@ -1,6 +1,6 @@
-﻿using BookCatalog.Application.DTOs;
-using BookCatalog.Application.Exceptions;
+﻿using BookCatalog.Application.Exceptions;
 using BookCatalog.Application.Interfaces;
+using BookCatalog.ApplicationServices.DTOs;
 using BookCatalog.Domain.Entities;
 using BookCatalog.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +60,7 @@ namespace BookCatalog.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Book>> SearchBooksAdvancedAsync(BookSearchDto searchDto)
+        public async Task<IEnumerable<Book>> SearchBooksAdvancedAsync(BookSearch searchDto)
         {
             var query = _dbSet
                 .Include(b => b.Author)

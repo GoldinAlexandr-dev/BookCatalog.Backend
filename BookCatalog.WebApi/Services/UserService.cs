@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BookCatalog.Application.DTOs;
 using BookCatalog.Application.Exceptions;
 using BookCatalog.Application.Interfaces;
-using BookCatalog.Application.ServiceInterfaces;
+using BookCatalog.ApplicationServices.DTOs;
+using BookCatalog.ApplicationServices.ServiceInterfaces;
 using BookCatalog.Domain.Entities;
 using FluentValidation;
 

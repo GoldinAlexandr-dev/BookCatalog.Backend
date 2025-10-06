@@ -1,6 +1,6 @@
-﻿using BookCatalog.Application.DTOs;
-using BookCatalog.Application.Exceptions;
-using BookCatalog.Application.ServiceInterfaces;
+﻿using BookCatalog.Application.Exceptions;
+using BookCatalog.ApplicationServices.DTOs;
+using BookCatalog.ApplicationServices.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookCatalog.WebApi.Controllers

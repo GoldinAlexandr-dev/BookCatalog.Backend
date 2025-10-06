@@ -1,5 +1,5 @@
-using BookCatalog.Application;
-using BookCatalog.Application.Mappings;
+using BookCatalog.ApplicationServices;
+using BookCatalog.ApplicationServices.Mappings;
 using BookCatalog.Persistence;
 using BookCatalog.Persistence.Data;
 using BookCatalog.WebApi;
@@ -11,9 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddApplication();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddPresentation();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

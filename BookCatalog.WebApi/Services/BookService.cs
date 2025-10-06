@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BookCatalog.Application.DTOs;
 using BookCatalog.Application.Exceptions;
 using BookCatalog.Application.Interfaces;
-using BookCatalog.Application.ServiceInterfaces;
+using BookCatalog.ApplicationServices.DTOs;
+using BookCatalog.ApplicationServices.ServiceInterfaces;
 using BookCatalog.Domain.Entities;
 using FluentValidation;
 
@@ -261,7 +261,7 @@ namespace BookCatalog.WebApi.Services
                 throw new AppValidationException(errors);
             }
 
-            var books = await _bookRepository.SearchBooksAdvancedAsync(searchDto);
+            var books = await _bookRepository.SearchBooksAdvancedAsync(_mapper.Map<BookSearch>(searchDto));
             var totalCount = books.Count();
 
             var pagedBooks = books

@@ -1,5 +1,4 @@
-﻿using BookCatalog.Application.DTOs;
-using BookCatalog.Domain.Entities;
+﻿using BookCatalog.Domain.Entities;
 
 namespace BookCatalog.Application.Interfaces
 {
@@ -10,7 +9,7 @@ namespace BookCatalog.Application.Interfaces
         Task<IEnumerable<Book>> GetBooksByGenreAsync(int genreId);
         Task<IEnumerable<Book>> SearchBooksAsync(string searchTerm);
         Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId);
-        Task<IEnumerable<Book>> SearchBooksAdvancedAsync(BookSearchDto searchDto);
+        Task<IEnumerable<Book>> SearchBooksAdvancedAsync(BookSearch searchDto);
         Task<IEnumerable<Book>> GetBooksByAuthorNameAsync(string authorName);
         Task<IEnumerable<Book>> GetBooksByGenreNameAsync(string genreName);
     }

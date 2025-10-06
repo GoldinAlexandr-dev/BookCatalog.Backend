@@ -1,12 +1,11 @@
-﻿using BookCatalog.Application.ServiceInterfaces;
-using BookCatalog.Application.Services;
+﻿using BookCatalog.ApplicationServices.ServiceInterfaces;
 using BookCatalog.WebApi.Services;
 
 namespace BookCatalog.WebApi
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             // Регистрация сервисов
             services.AddScoped<IBookService, BookService>();
