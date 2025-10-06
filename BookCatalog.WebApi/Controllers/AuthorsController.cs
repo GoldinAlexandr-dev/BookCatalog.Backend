@@ -3,7 +3,7 @@ using BookCatalog.ApplicationServices.DTOs;
 using BookCatalog.ApplicationServices.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookCatalog.WebApi.Controllers
+namespace BookCatalog.PersistenceServices.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

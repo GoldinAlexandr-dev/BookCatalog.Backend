@@ -6,7 +6,7 @@ using BookCatalog.ApplicationServices.ServiceInterfaces;
 using BookCatalog.Domain.Entities;
 using FluentValidation;
 
-namespace BookCatalog.WebApi.Services
+namespace BookCatalog.PersistenceServices.Services
 {
     public class GenreService : IGenreService
     {

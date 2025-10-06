@@ -1,4 +1,4 @@
-﻿namespace BookCatalog.WebApi.Middleware
+﻿namespace BookCatalog.PersistenceServices.Middleware
 {
     public static class CustomExceptionHandlerMiddlewareExtensions
     {

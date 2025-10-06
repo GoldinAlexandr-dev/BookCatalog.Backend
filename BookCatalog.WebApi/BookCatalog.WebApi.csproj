@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BookCatalog.ApplicationServices\BookCatalog.ApplicationServices.csproj" />
     <ProjectReference Include="..\BookCatalog.Application\BookCatalog.Application.csproj" />
+    <ProjectReference Include="..\BookCatalog.PersistenceServices\BookCatalog.PersistenceServices.csproj" />
     <ProjectReference Include="..\BookCatalog.Persistence\BookCatalog.Persistence.csproj" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace BookCatalog.WebApi.Middleware
+namespace BookCatalog.PersistenceServices.Middleware
 {
     public class CustomExceptionHandlerMiddleware
     {

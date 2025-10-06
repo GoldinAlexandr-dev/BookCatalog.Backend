@@ -1,11 +1,12 @@
 ﻿using BookCatalog.ApplicationServices.ServiceInterfaces;
-using BookCatalog.WebApi.Services;
+using BookCatalog.PersistenceServices.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace BookCatalog.WebApi
+namespace BookCatalog.PersistenceServices
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPresentation(this IServiceCollection services)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
             // Регистрация сервисов
             services.AddScoped<IBookService, BookService>();

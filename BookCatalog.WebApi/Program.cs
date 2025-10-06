@@ -2,8 +2,8 @@ using BookCatalog.ApplicationServices;
 using BookCatalog.ApplicationServices.Mappings;
 using BookCatalog.Persistence;
 using BookCatalog.Persistence.Data;
-using BookCatalog.WebApi;
-using BookCatalog.WebApi.Middleware;
+using BookCatalog.PersistenceServices;
+using BookCatalog.PersistenceServices.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddPresentation();
+builder.Services.AddPersistenceServices();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
