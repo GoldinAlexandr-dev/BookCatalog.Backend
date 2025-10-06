@@ -1,4 +1,5 @@
 ﻿using BookCatalog.Application.DTOs;
+using BookCatalog.Application.Exceptions;
 using BookCatalog.Application.Interfaces;
 using BookCatalog.Domain.Entities;
 using BookCatalog.Persistence.Data;
@@ -23,11 +24,13 @@ namespace BookCatalog.Persistence.Repositories
 
         public async Task<Book> GetBookWithDetailsAsync(int id)
         {
-            return await _dbSet
+            var book = await _dbSet
                 .Include(b => b.Author)
                 .Include(b => b.Genres)
                 .Include(b => b.Reviews)
                 .FirstOrDefaultAsync(b => b.Id == id);
+
+            return book ?? throw new NotFoundException(nameof(Book), id);
         }
 
         public async Task<IEnumerable<Book>> GetBooksByGenreAsync(int genreId)

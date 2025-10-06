@@ -2,6 +2,7 @@
 
 namespace BookCatalog.Application.Interfaces
 {
+
     public interface IReviewRepository : IRepository<Review>
     {
         Task<IEnumerable<Review>> GetReviewsByBookAsync(int bookId);
@@ -9,8 +10,8 @@ namespace BookCatalog.Application.Interfaces
         Task<IEnumerable<Review>> GetReviewsWithDetailsAsync();
         Task<Review> GetReviewWithDetailsAsync(int id);
         Task<double> GetAverageRatingAsync(int bookId);
-        Task<int> GetReviewsCountAsync(int bookId);
         Task<bool> UserHasReviewedBookAsync(int userId, int bookId);
+        Task<int> GetReviewsCountAsync(int bookId);
         Task<int> GetReviewsCountByUserAsync(int userId);
     }
 }

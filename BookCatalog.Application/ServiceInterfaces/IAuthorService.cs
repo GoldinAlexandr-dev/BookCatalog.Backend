@@ -7,7 +7,7 @@ namespace BookCatalog.Application.ServiceInterfaces
         Task<IEnumerable<AuthorDto>> GetAllAuthorsAsync();
         Task<AuthorDetailDto> GetAuthorByIdAsync(int id);
         Task<AuthorDto> CreateAuthorAsync(CreateAuthorDto createAuthorDto);
-        Task<AuthorDto> UpdateAuthorAsync(AuthorDto authorDto);
+        Task<AuthorDto> UpdateAuthorAsync(UpdateAuthorDto updateAuthorDto);  
         Task DeleteAuthorAsync(int id);
     }
 }

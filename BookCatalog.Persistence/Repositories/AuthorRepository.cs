@@ -1,4 +1,5 @@
-﻿using BookCatalog.Application.Interfaces;
+﻿using BookCatalog.Application.Exceptions;
+using BookCatalog.Application.Interfaces;
 using BookCatalog.Domain.Entities;
 using BookCatalog.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +22,14 @@ namespace BookCatalog.Persistence.Repositories
 
         public async Task<Author> GetAuthorWithDetailsAsync(int id)
         {
-            return await _dbSet
+            var author = await _dbSet
                 .Include(a => a.Books)
                     .ThenInclude(b => b.Genres)
                 .Include(a => a.Books)
                     .ThenInclude(b => b.Reviews)
                 .FirstOrDefaultAsync(a => a.Id == id);
+
+            return author ?? throw new NotFoundException(nameof(Author), id);
         }
     }
 }

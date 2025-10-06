@@ -1,4 +1,5 @@
-﻿using BookCatalog.Application.Interfaces;
+﻿using BookCatalog.Application.Exceptions;
+using BookCatalog.Application.Interfaces;
 using BookCatalog.Domain.Entities;
 using BookCatalog.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -45,13 +46,15 @@ namespace BookCatalog.Persistence.Repositories
 
         public async Task<Review> GetReviewWithDetailsAsync(int id)
         {
-            return await _dbSet
+            var review = await _dbSet
                 .Include(r => r.User)
                 .Include(r => r.Book)
                     .ThenInclude(b => b.Author)
                 .Include(r => r.Book)
                     .ThenInclude(b => b.Genres)
                 .FirstOrDefaultAsync(r => r.Id == id);
+
+            return review ?? throw new NotFoundException(nameof(Review), id);
         }
 
         public async Task<double> GetAverageRatingAsync(int bookId)
@@ -79,10 +82,12 @@ namespace BookCatalog.Persistence.Repositories
         // Переопределяем базовый метод для включения связанных данных
         public override async Task<Review> GetByIdAsync(int id)
         {
-            return await _dbSet
+            var review = await _dbSet
                 .Include(r => r.User)
                 .Include(r => r.Book)
                 .FirstOrDefaultAsync(r => r.Id == id);
+
+            return review ?? throw new NotFoundException(nameof(Review), id);
         }
 
         // Переопределяем метод получения всех отзывов с деталями

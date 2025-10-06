@@ -1,4 +1,5 @@
-﻿using BookCatalog.Application.Interfaces;
+﻿using BookCatalog.Application.Exceptions;
+using BookCatalog.Application.Interfaces;
 using BookCatalog.Domain.Entities;
 using BookCatalog.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,14 @@ namespace BookCatalog.Persistence.Repositories
 
         public async Task<Genre> GetGenreWithBooksAsync(int genreId)
         {
-            return await _dbSet
+            var genre = await _dbSet
                 .Include(g => g.Books)
                     .ThenInclude(b => b.Author)
                 .Include(g => g.Books)
                     .ThenInclude(b => b.Reviews)
                 .FirstOrDefaultAsync(g => g.Id == genreId);
+
+            return genre ?? throw new NotFoundException(nameof(Genre), genreId);
         }
 
         public async Task<IEnumerable<Genre>> GetGenresWithBooksAsync()
@@ -31,8 +34,10 @@ namespace BookCatalog.Persistence.Repositories
 
         public async Task<Genre> GetByNameAsync(string name)
         {
-            return await _dbSet
+            var genre = await _dbSet
                 .FirstOrDefaultAsync(g => g.Name == name);
+
+            return genre ?? throw new NotFoundException(nameof(Genre), name);
         }
 
         public async Task<bool> ExistsByNameAsync(string name)
@@ -70,9 +75,11 @@ namespace BookCatalog.Persistence.Repositories
         // Переопределяем базовый метод для включения связанных данных
         public override async Task<Genre> GetByIdAsync(int id)
         {
-            return await _dbSet
+            var genre = await _dbSet
                 .Include(g => g.Books)
                 .FirstOrDefaultAsync(g => g.Id == id);
+
+            return genre ?? throw new NotFoundException(nameof(Genre), id);
         }
 
         // Переопределяем метод получения всех жанров с сортировкой
@@ -93,7 +100,7 @@ namespace BookCatalog.Persistence.Repositories
                     BookCount = g.Books.Count
                 })
                 .OrderByDescending(g => g.BookCount)
-                .ThenBy(g => g.Genre.Name)
+                .ThenBy(g => g.Genre != null ? g.Genre.Name : string.Empty)
                 .ToListAsync();
         }
 
@@ -115,12 +122,5 @@ namespace BookCatalog.Persistence.Repositories
 
             return genre?.Books.Any() ?? false;
         }
-    }
-
-    // DTO для жанра с количеством книг
-    public class GenreWithBookCount
-    {
-        public Genre Genre { get; set; }
-        public int BookCount { get; set; }
     }
 }

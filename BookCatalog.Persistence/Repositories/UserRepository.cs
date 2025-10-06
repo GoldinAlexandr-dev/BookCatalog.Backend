@@ -1,4 +1,5 @@
-﻿using BookCatalog.Application.Interfaces;
+﻿using BookCatalog.Application.Exceptions;
+using BookCatalog.Application.Interfaces;
 using BookCatalog.Domain.Entities;
 using BookCatalog.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,19 +14,23 @@ namespace BookCatalog.Persistence.Repositories
 
         public async Task<User> GetByUsernameAsync(string username)
         {
-            return await _dbSet
+            var user = await _dbSet
                 .FirstOrDefaultAsync(u => u.Username == username);
+
+            return user ?? throw new NotFoundException(nameof(User), username);
         }
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            return await _dbSet
+            var user = await _dbSet
                 .FirstOrDefaultAsync(u => u.Email == email);
+
+            return user ?? throw new NotFoundException(nameof(User), email);
         }
 
         public async Task<User> GetUserWithReviewsAsync(int userId)
         {
-            return await _dbSet
+            var user = await _dbSet
                 .Include(u => u.Reviews)
                     .ThenInclude(r => r.Book)
                         .ThenInclude(b => b.Author)
@@ -33,6 +38,8 @@ namespace BookCatalog.Persistence.Repositories
                     .ThenInclude(r => r.Book)
                         .ThenInclude(b => b.Genres)
                 .FirstOrDefaultAsync(u => u.Id == userId);
+
+            return user ?? throw new NotFoundException(nameof(User), userId);
         }
 
         public async Task<IEnumerable<User>> GetUsersWithReviewsAsync()
@@ -72,9 +79,11 @@ namespace BookCatalog.Persistence.Repositories
         // Переопределяем базовый метод для включения связанных данных
         public override async Task<User> GetByIdAsync(int id)
         {
-            return await _dbSet
+            var user = await _dbSet
                 .Include(u => u.Reviews)
                 .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user ?? throw new NotFoundException(nameof(User), id);
         }
 
         // Переопределяем метод получения всех пользователей с сортировкой
@@ -107,7 +116,7 @@ namespace BookCatalog.Persistence.Repositories
         }
 
         // Метод для получения статистики по пользователю
-        public async Task<UserStats> GetUserStatsAsync(int userId)
+        public async Task<UserStats?> GetUserStatsAsync(int userId)
         {
             var user = await _dbSet
                 .Include(u => u.Reviews)
@@ -123,13 +132,5 @@ namespace BookCatalog.Persistence.Repositories
                 LastReviewDate = user.Reviews.Any() ? user.Reviews.Max(r => r.CreatedAt) : null
             };
         }
-    }
-
-    // DTO для статистики пользователя
-    public class UserStats
-    {
-        public int TotalReviews { get; set; }
-        public double AverageRating { get; set; }
-        public DateTime? LastReviewDate { get; set; }
     }
 }
